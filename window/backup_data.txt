@@ -1,0 +1,47 @@
+@echo off
+echo 当前盘符：%~d0
+echo 当前盘符和路径：%~dp0
+echo 当前盘符和路径的短文件名格式：%~sdp0
+echo 当前批处理全路径：%~f0
+echo 当前CMD默认目录：%cd%
+pause
+
+
+
+@echo off
+
+echo %~dp0
+set b=src\labautotest\run\test_run\test_run_suite.py
+echo %b%
+set rp=%%~dp0%b%
+
+echo %rp%
+pause
+
+
+
+
+
+
+
+
+@echo off
+set p1=:\Program Files\WinRAR\WinRAR.exe
+set p2=:\Program Files (x86)\WinRAR\WinRAR.exe
+
+for %%i in (b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z) do (
+    set rp=%%i%p1%
+    echo %rp%
+
+    if exist %%i%p1% goto runRar
+)
+
+echo noFound.
+goto end
+
+:runRar
+echo %rp%
+
+:end
+
+@pause

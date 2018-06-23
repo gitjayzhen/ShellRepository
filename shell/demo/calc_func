@@ -1,0 +1,64 @@
+#!/bin/bash
+jia()
+{
+	x=$1
+	y=$2
+	s=$((x+y))
+	echo "运算结果为:$s"
+}
+jian()
+{
+        x=$1
+        y=$2
+				if [ "$x" -ge "$y" ];then
+			        s=$((x-y))
+							echo "运算结果为:$s"
+				else
+							s=$((y-x))
+			        echo "运算结果为:$s"
+				fi
+}
+cheng()
+{
+				x=$1
+        y=$2
+        if [ $x -eq 0 -o $y -eq 0 ];then
+        
+	        echo "乘数为0,无法计算"
+	        else
+	        s=$((y*x))
+	        echo "运算结果为:$s"
+        fi
+
+
+}
+chu()
+{
+        x=$1
+        y=$2
+        if [ $x -eq 0 -o $y -eq 0 ];then
+
+	        echo "除数为0,无法计算"
+	      elif (( $x > $y));then
+	        s=$((x/y))
+	        echo "运算结果为:$s"
+				else
+					s=$((y/x))
+					echo "运算结果为:$s"
+        fi
+}
+echo "请输入第一个数"
+read a
+echo "请输入运算符号"
+read m
+echo "请输入第二个数"
+read b
+case "$m" in
+"+")jia $a $b;;
+"-")jian $a $b;;
+"*")cheng $a $b;;
+"/")chu $a $b;;
+*)echo "输入有误,退出"
+esac
+
+

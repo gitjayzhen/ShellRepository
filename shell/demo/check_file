@@ -1,0 +1,39 @@
+#!/bin/bash
+
+###########################
+checkfile()
+{
+	cd /tmp
+	myfile="oracle_10201_database_linux32.zip"
+	if [ ! -f "$myfile" ];then
+		echo "此文件不存在"
+		cd /mnt/hgfs/app
+		echo "正在拷贝*****"
+		cp $myfile /tmp
+
+	fi
+	echo "此文件存在"
+	cd /tmp
+	unzip $myfile 
+	if [ -d "database" ];then
+
+		cd /tmp/database
+		
+		./runInstaller
+
+	fi
+
+
+}
+
+###########################33
+if [ "$USER" == "tester" ];then
+
+	echo "是tester"
+	checkfile
+else
+
+	echo "不是tester"
+	exit
+
+fi

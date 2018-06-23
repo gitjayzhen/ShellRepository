@@ -1,0 +1,9 @@
+# .mavenrc
+
+mvn() {
+  docker run --rm \
+    -v $(pwd):/project \
+    -v /data/tmp/.m2:/root/.m2 \
+    registry.qadev.com/library-exe/maven:3-jdk8 \
+    $*
+}

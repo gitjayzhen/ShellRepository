@@ -1,0 +1,31 @@
+#!/bin/bash
+readfile()
+{
+	x=$1
+	echo "目录存在,请输入文件名"
+	read file
+	if [ -f "$file" ];then
+		echo "存在"
+	else
+		echo "文件不存在,是否创建文件,yes创建,no不创建"
+		read m
+		case "$m" in
+			"yes")cd $x
+				touch $file;;
+			"no")echo "退出";;
+			*)echo "输入有误,退出"
+		esac
+	fi
+		
+}
+
+
+
+echo "请输入目录名:"
+read dir
+if [ -d "$dir" ];then
+	readfile $dir
+else
+	echo "目录不存在,退出"
+fi
+

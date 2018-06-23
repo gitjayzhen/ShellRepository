@@ -1,0 +1,115 @@
+#!/bin/bash
+
+################################################
+createdir()
+{
+	mydir="/oracle/product/10.2.0/db_1"
+	mkdir -p $mydir
+	cd /
+	if [ -d "$mydir" ];then
+		echo "创建成功"# >> /tmp/a >> /tmp/a
+		chown -R tester.oinstall /oracle
+		chmod -R 755 /oracle
+		ls -l >> /tmp/a
+	else
+		echo "创建失败"# >> /tmp/a 2>> /tmp/b
+	fi
+
+
+}
+#################################################
+createuser()
+{
+	useradd tester -g oinstall -G dba
+
+	passwd tester
+
+	if [ "$(grep "tester" /etc/passwd | cut -d ":" -f "1")" == "tester" ];then
+
+		echo "用户成公"
+	else
+
+		echo "用户失败"
+	
+
+	fi 
+
+
+}
+
+######################创建########################
+creategrp()
+{
+	groupadd dba
+	if [ "$(grep "dba" /etc/group | cut -d ":" -f "1")" == "dba" ];then
+		echo "dba创建成共"
+		groupadd oinstall
+		if [ "$(grep "oinstall" /etc/group | cut -d ":" -f "1")" == "oinstall" ];then
+                	echo "oinstall创建成共"
+
+			createuser
+		else
+			echo "oinstall 创建失败"
+		fi
+
+	else
+		echo "dba创建失败"
+	fi
+
+
+}
+######################################################
+editenv()
+{
+	cd /home/tester/
+#	vi ./.bash_profile
+	sed -i "10aORACLE_BASE=/oracle" ./.bash_profile
+	sed -i '11aORACLE_HOME=$ORACLE_BASE/product/10.2.0/db_1' ./.bash_profile
+	sed -i "12aORACLE_SID=orcl" ./.bash_profile
+	sed -i '13aPATH=$PATH:$HOME/bin:$ORACLE_HOME/bin' ./.bash_profile
+	sed -i '14aLD_LIBRARY_PATH=$ORACLE_HOME/lib:/usr/lib' ./.bash_profile
+	sed -i "15aexport ORACLE_BASE" ./.bash_profile
+	sed -i "16aexport ORACLE_HOME" ./.bash_profile
+	sed -i "17aexport ORACLE_SID" ./.bash_profile
+	sed -i '18aexport PATH' ./.bash_profile
+	sed -i "19aexport LD_LIBRARY_PATH" ./.bash_profile
+
+	source  ./.bash_profile
+	if [ "$ORACLE_BASE" == "/oracle" ];then
+
+		echo "环境变量修改成工"
+
+	else
+
+		echo "环境变量修改失败"
+
+	fi
+
+
+
+}
+
+##########################用户#########################
+if [ "$USER" == "root" ];then
+
+	echo "是root"
+	#creategrp
+else
+
+	echo "否"
+	exit
+
+fi
+#######################################################
+#createdir
+editenv 
+
+
+
+
+
+
+
+
+
+

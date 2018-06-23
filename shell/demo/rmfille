@@ -1,0 +1,17 @@
+#!/bin/sh
+###Warning:Not Modified
+
+VARS=$#
+if [ $VARS -lt 1 ];
+then
+	echo "[ERROR!]:must input which dir or file you want to delete!"
+	echo "####any questions please mail-to:liuli@hou.com ######"
+	exit 0;
+fi
+FILE_INPUT=$1
+mkdir -p /home/dq_offline/tmp_lich123
+sudo mv $FILE_INPUT /home/dq_offline/tmp_lich123
+sudo chown -R dq_offline:dq_offline /home/dq_offline/tmp_lich123
+rm -rf /home/dq_offline/tmp_lich123
+echo "delete ${FILE_INPUT} Done!"
+

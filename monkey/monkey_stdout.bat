@@ -1,0 +1,1 @@
+monkey --monitor-native-crashes --kill-process-after-error --pct-trackball 0 --pct-nav 10 --pct-anyevent 10 -v -v --throttle 500 -p com.youku.phone 5880000 >>/sdcard/log.log 2>>/sdcard/log_err.log
