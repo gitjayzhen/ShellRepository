@@ -193,7 +193,7 @@ class Handlers
             oSession["response-trickle-delay"] = "1000"; 
         }
         //2.在此处【过滤并高亮显示host】
-        if( oSession.host.IndexOf("i-play.mobile.youku.com") > -1 || oSession.host.IndexOf("a-dxk.play.api.3g.youku.com") > -1){
+        if( oSession.host.IndexOf("i-play.mobile.yykk.com") > -1 || oSession.host.IndexOf("a-dxk.play.api.3g.yykk.com") > -1){
             oSession["ui-color"] = "green";
           
         }
@@ -203,8 +203,8 @@ class Handlers
         //    }
         
         //4.在此处【重定向urlplace】host和url的判断  http://    http://
-        if(oSession.HostnameIs("test.api.mobile.youku.com") && oSession.url.IndexOf("/openapi-wireless/initial") > -1){
-            oSession.hostname = "api.mobile.youku.com"
+        if(oSession.HostnameIs("test.api.mobile.yykk.com") && oSession.url.IndexOf("/openapi-wireless/initial") > -1){
+            oSession.hostname = "api.mobile.yykk.com"
             }
 
         if (m_DisableCaching) {
@@ -314,7 +314,7 @@ class Handlers
         
         /*
         //6.在此处修改json中的数据【修改接口字段的值】
-        if(oSession.HostnameIs("i-play.mobile.youku.com") && oSession.url.IndexOf("/common/v5/play") > -1){
+        if(oSession.HostnameIs("i-play.mobile.yykk.com") && oSession.url.IndexOf("/common/v5/play") > -1){
             // 获取Response Body中JSON字符串
             var responseStringOriginal =  oSession.GetResponseBodyAsString();
             // 转换为可编辑的JSONObject变量
@@ -331,7 +331,7 @@ class Handlers
 		
         
         //7.在此处修改json中的数据【增加接口字段=值】
-        if(oSession.HostnameIs("i-play.mobile.youku.com") && oSession.url.IndexOf("/common/v5/play") > -1){
+        if(oSession.HostnameIs("i-play.mobile.yykk.com") && oSession.url.IndexOf("/common/v5/play") > -1){
             // 获取Response Body中JSON字符串
             var responseStringOriginal =  oSession.GetResponseBodyAsString();
             // 转换为可编辑的JSONObject变量
@@ -344,8 +344,8 @@ class Handlers
         }
         
         /*
-        //8.修改系统弹幕的跳转方式【http://dmapp.youku.com/common/danmu/sysdmlist 】
-        if(oSession.HostnameIs("dmapp.youku.com") && oSession.url.IndexOf("common/danmu/sysdmlist") > -1){
+        //8.修改系统弹幕的跳转方式【http://dmapp.yykk.com/common/danmu/sysdmlist 】
+        if(oSession.HostnameIs("dmapp.yykk.com") && oSession.url.IndexOf("common/danmu/sysdmlist") > -1){
             // 获取Response Body中JSON字符串
             var responseStringOriginal =  oSession.GetResponseBodyAsString();
             // 转换为可编辑的JSONObject变量

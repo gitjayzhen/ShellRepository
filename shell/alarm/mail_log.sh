@@ -24,5 +24,5 @@ if [[ ${ErrNum} != 0 ]] || [[ ${NullPointerExceptionNum} != 0  ]];then
 	echo "----------------------------------------------------" >> ${FileLogContent}
 	grep -vw 'ERROR' ${LogTemp} |grep -A10 "Exception" |tail -59 >> ${FileLogContent}
 	LogContent=`cat ${FileLogContent}`
-	python mail.py "zhaohongyong@hou.cn,wangzhe01@hou.cn,wanglei01@hou.cn" "[重要]xloan3异常报警" "${LogContent}"
+	python mail.py "zhao@hu.cn,wang01@hu.cn" "[重要]异常报警" "${LogContent}"
 fi

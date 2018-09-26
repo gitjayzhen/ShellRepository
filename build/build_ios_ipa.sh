@@ -1,6 +1,6 @@
 whoami
 #设置输出路径
-output=$WORKSPACE/../ios_hbFinance
+output=$WORKSPACE/../ios_zzFinance
 cd $output
 rm -rf output
 mkdir output
