@@ -1,0 +1,3 @@
+# adb shell monkey -v --throttle 300 --pct-touch 30 --pct-motion 20 --pct-nav 20 --pct-majornav 15 --pct-appswitch 5 --pct-anyevent 5 --pct-trackball 0 --pct-syskeys 0 -p com.yykk.phone 1000
+# monkey --monitor-native-crashes --kill-process-after-error --pct-trackball 0 --pct-nav 10 --pct-anyevent 10 -v -v --throttle 500 -p com.yykk.phone 5880000 >>/sdcard/log.log 2>>/sdcard/log_err.log
+adb shell monkey --monitor-native-crashes --kill-process-after-error --pct-trackball 0 --pct-nav 10 --pct-anyevent 10 -v -v --throttle 500 -p com.yykk.phone 5880000 > d:\apadlog.txt

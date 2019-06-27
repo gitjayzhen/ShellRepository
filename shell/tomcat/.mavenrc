@@ -1,5 +1,5 @@
 # .mavenrc
-
+# 作为docker轻应用使用：用后删除
 mvn() {
   docker run --rm \
     -v $(pwd):/project \

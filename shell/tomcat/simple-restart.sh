@@ -1,5 +1,5 @@
 #! /bin/bash
-p='/search/odin/data/webautoservice/tomcat'
+p='/data/webautoservice/tomcat'
 file=$p/ROOT.war
 echo "this is file--->"$file
 if [ ! -e $file ];then

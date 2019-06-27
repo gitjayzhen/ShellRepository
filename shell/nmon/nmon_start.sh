@@ -2,7 +2,7 @@
 Tday=$(date +%y%m%d)
 file_path="/home/ap/epsvc/perfmon/$Tday/"
 file_ser="T105PC02VM07"
-file_ip="128.192.82.206"
+file_ip="***"
 file_time=$(date +%Y%m%d%H%M)
 file_format=".nmon"
 path_log=$file_path/$file_ser-$file_ip-$file_time$file_format

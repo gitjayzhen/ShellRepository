@@ -1,7 +1,7 @@
 #!/bin/sh
 cmds=$1
 echo $cmds
-projectArray=("hbadmin" "tomcat-hbadmin-api" "tomcat-aloan-las" "tomcat-aloan-plas-api" "tomcat-aloan-plas-task" "tomcat-aloan-oms")
+projectArray=("tomcat-1" "tomcat-2" "tomcat-3" "tomcat-4")
 workpath=/data/server
 
 cd $workpath || exit

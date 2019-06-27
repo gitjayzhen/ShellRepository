@@ -1,16 +1,16 @@
 @ECHO OFF
 
 ECHO.:::::::::::::::::::::::::::::::::::::::::::::::::
-ECHO.::                 Monkey²âÊÔ                  ::
+ECHO.::                 Monkeyæµ‹è¯•                  ::
 ECHO.:::::::::::::::::::::::::::::::::::::::::::::::::
 
 IF NOT EXIST %~dp0\config.conf GOTO EXIT
 
-ECHO.[ INFO ] ×¼±¸Monkey²âÊÔ
+ECHO.[ INFO ] å‡†å¤‡Monkeyæµ‹è¯•
 
-ECHO.[ INFO ] ¶ÁÈ¡config.confÖÐÐÅÏ¢
+ECHO.[ INFO ] è¯»å–config.confä¸­ä¿¡æ¯
 
-REM ´ÓÅäÖÃÎÄ¼þÖÐ»ñµÃ°üÃû
+REM ä»Žé…ç½®æ–‡ä»¶ä¸­èŽ·å¾—åŒ…å
 
 FOR /F "tokens=1,2 delims==" %%a in (config.conf) do (
 
@@ -23,12 +23,12 @@ FOR /F "tokens=1,2 delims==" %%a in (config.conf) do (
 )
 
 
-REM »ñÈ¡ÈÕÆÚ,¸ñÊ½Îª£º20140808
+REM èŽ·å–æ—¥æœŸ,æ ¼å¼ä¸ºï¼š20140808
 
 SET c_date=%date:~0,4%%date:~5,2%%date:~8,2%
 
 
-REM »ñÈ¡µÃÐ¡Ê±,¸ñÊ½Îª£º24Ð¡Ê±ÖÆ£¬10µãÇ°²¹0
+REM èŽ·å–å¾—å°æ—¶,æ ¼å¼ä¸ºï¼š24å°æ—¶åˆ¶ï¼Œ10ç‚¹å‰è¡¥0
 
 SET c_time=%time:~0,2%
 
@@ -39,16 +39,16 @@ SET c_time=0%time:~1,1%
 )
 
 
-REM ×éºÏÐ¡Ê±¡¢·Ö¡¢Ãë£¬¸ñÊ½Îª: 131420
+REM ç»„åˆå°æ—¶ã€åˆ†ã€ç§’ï¼Œæ ¼å¼ä¸º: 131420
 
 SET c_time=%c_time%%time:~3,2%%time:~6,2%
 
-REM ½«µ±ÔËÐÐÊ±¼äµã×öÎªÈÕÖ¾ÎÄ¼þÃû
+REM å°†å½“è¿è¡Œæ—¶é—´ç‚¹åšä¸ºæ—¥å¿—æ–‡ä»¶å
 
 SET logfilename=%c_date%%c_time%
 
 
-REM ´´½¨µ±ÌìÈÕÆÚÄ¿Â¼¼°²âÊÔAPPÈÕÖ¾±£´æÄ¿Â¼
+REM åˆ›å»ºå½“å¤©æ—¥æœŸç›®å½•åŠæµ‹è¯•APPæ—¥å¿—ä¿å­˜ç›®å½•
 
 IF NOT EXIST %~dp0\%c_date%    md %~dp0\%c_date%
 
@@ -56,7 +56,7 @@ SET logdir="%~dp0\%c_date%\%appEnName%%appversion%"
 
 IF NOT EXIST %logdir% (
 
-    ECHO.[ Exec ] ´´½¨Ä¿Â¼£º%c_date%\%appEnName%%appversion%
+    ECHO.[ Exec ] åˆ›å»ºç›®å½•ï¼š%c_date%\%appEnName%%appversion%
 
     md %logdir%
 
@@ -64,7 +64,7 @@ IF NOT EXIST %logdir% (
 
 
 
-REM »ñµÃÊÖ»úÐÅÏ¢£¬ÏÔÊ¾²¢±£´æ
+REM èŽ·å¾—æ‰‹æœºä¿¡æ¯ï¼Œæ˜¾ç¤ºå¹¶ä¿å­˜
 
 adb shell cat /system/build.prop>phone.info
 
@@ -80,47 +80,47 @@ FOR /F "tokens=1,2 delims==" %%a in (phone.info) do (
 
 del /a/f/q phone.info
 
-ECHO.[ INFO ] ¶ÁÈ¡PhoneÐÅÏ¢
+ECHO.[ INFO ] è¯»å–Phoneä¿¡æ¯
 
-ECHO.         ÊÖ»úÆ·ÅÆ: %brand%
+ECHO.         æ‰‹æœºå“ç‰Œ: %brand%
 
-ECHO.         ÊÖ»úÐÍºÅ: %model%
+ECHO.         æ‰‹æœºåž‹å·: %model%
 
-ECHO.         ÏµÍ³°æ±¾: Android %androidOS%
+ECHO.         ç³»ç»Ÿç‰ˆæœ¬: Android %androidOS%
 
-ECHO.PhoneÐÅÏ¢>"%logdir%\%logfilename%_%model%.txt"
+ECHO.Phoneä¿¡æ¯>"%logdir%\%logfilename%_%model%.txt"
 
-ECHO.ÊÖ»úÆ·ÅÆ: %brand%>>"%logdir%\%logfilename%_%model%.txt"
+ECHO.æ‰‹æœºå“ç‰Œ: %brand%>>"%logdir%\%logfilename%_%model%.txt"
 
-ECHO.ÊÖ»úÐÍºÅ: %model%>>"%logdir%\%logfilename%_%model%.txt"
+ECHO.æ‰‹æœºåž‹å·: %model%>>"%logdir%\%logfilename%_%model%.txt"
 
-ECHO.ÏµÍ³°æ±¾: Android %androidOS%>>"%logdir%\%logfilename%_%model%.txt"
+ECHO.ç³»ç»Ÿç‰ˆæœ¬: Android %androidOS%>>"%logdir%\%logfilename%_%model%.txt"
 
 
 
 ECHO.
 
-ECHO.[ Exec ] Ê¹ÓÃLogcatÇå¿ÕPhoneÖÐlog
+ECHO.[ Exec ] ä½¿ç”¨Logcatæ¸…ç©ºPhoneä¸­log
 
 adb logcat -c
 
-REM ECHO.[ INFO ] ÔÝÍ£2Ãë...
+REM ECHO.[ INFO ] æš‚åœ2ç§’...
 
 ping -n 2 127.0.0.1>nul
 
 ECHO.
 
-ECHO.[ INFO ] ¿ªÊ¼Ö´ÐÐMonkeyÃüÁî
+ECHO.[ INFO ] å¼€å§‹æ‰§è¡ŒMonkeyå‘½ä»¤
 
-REM ECHO.[ INFO ] Ç¿ÖÆ¹Ø±Õ×¼±¸²âÊÔµÄAPP
+REM ECHO.[ INFO ] å¼ºåˆ¶å…³é—­å‡†å¤‡æµ‹è¯•çš„APP
 
 adb shell am force-stop %packageName%
 
 
 
-:::::::::::::::::Monkey²âÊÔÃüÁî::::::::::::::::::::::::
+:::::::::::::::::Monkeyæµ‹è¯•å‘½ä»¤::::::::::::::::::::::::
 
-::::::::::::ÐÞ¸Ä²ßÂÔÇë½öÔÚ´ËÇøÓòÄÚÐÞ¸Ä:::::::::::::::::
+::::::::::::ä¿®æ”¹ç­–ç•¥è¯·ä»…åœ¨æ­¤åŒºåŸŸå†…ä¿®æ”¹:::::::::::::::::
 
 ECHO.[ Exec ] adb shell monkey -p %packageName% -s %c_time%  --throttle 500 -v -v -v 10000
 
@@ -130,21 +130,21 @@ adb shell monkey -p %packageName% -s %c_time% --throttle 500 -v -v -v 10000>%log
 
 
 
-::::::::::::ÐÞ¸Ä²ßÂÔÇë½öÔÚ´ËÇøÓòÄÚÐÞ¸Ä:::::::::::::::::
+::::::::::::ä¿®æ”¹ç­–ç•¥è¯·ä»…åœ¨æ­¤åŒºåŸŸå†…ä¿®æ”¹:::::::::::::::::
 
 ::::::::::::::::::::::END::::::::::::::::::::::::::::::
 
-ECHO.[ INFO ] Ö´ÐÐMonkeyÃüÁî½áÊø
+ECHO.[ INFO ] æ‰§è¡ŒMonkeyå‘½ä»¤ç»“æŸ
 
 ECHO.
 
 
 
-ECHO.[ Exce ] ÊÖ»ú½ØÆÁ
+ECHO.[ Exce ] æ‰‹æœºæˆªå±
 
 adb shell screencap -p /sdcard/monkey_run_end.png
 
-ECHO.[ INFO ] ¿½±´½ØÆÁÍ¼Æ¬ÖÁµçÄÔ
+ECHO.[ INFO ] æ‹·è´æˆªå±å›¾ç‰‡è‡³ç”µè„‘
 
 adb pull /sdcard/monkey_run_end.png %logdir%
 
@@ -156,7 +156,7 @@ ren monkey_run_end.png %logfilename%.png
 
 ECHO.
 
-ECHO.[ Exec ] Ê¹ÓÃLogcatµ¼³öÈÕÖ¾
+ECHO.[ Exec ] ä½¿ç”¨Logcatå¯¼å‡ºæ—¥å¿—
 
 adb logcat -d >%logdir%\%logfilename%_logcat.log
 
@@ -164,13 +164,13 @@ adb logcat -d >%logdir%\%logfilename%_logcat.log
 
 REM ECHO.
 
-REM ECHO.[ Exec ] µ¼³ötracesÎÄ¼þ
+REM ECHO.[ Exec ] å¯¼å‡ºtracesæ–‡ä»¶
 
 REM adb shell cat /data/anr/traces.txt>%logfilename%_traces.log
 
 
 
-REM ´ýÀ©Õ¹,ÉÏ´«ÈÕÖ¾ÖÁ·þÎñÆ÷
+REM å¾…æ‰©å±•,ä¸Šä¼ æ—¥å¿—è‡³æœåŠ¡å™¨
 
 
 
@@ -178,5 +178,5 @@ REM ´ýÀ©Õ¹,ÉÏ´«ÈÕÖ¾ÖÁ·þÎñÆ÷
 
 ECHO.
 
-ECHO.[ INFO ] Çë°´ÈÎÒâ¼ü¹Ø±Õ´°¿Ú...
+ECHO.[ INFO ] è¯·æŒ‰ä»»æ„é”®å…³é—­çª—å£...
 PAUSE>nul

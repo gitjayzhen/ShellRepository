@@ -1,6 +1,6 @@
 @ECHO OFF
 
-ECHO [²é¿´APK°üÐÅÏ¢]
+ECHO [æŸ¥çœ‹APKåŒ…ä¿¡æ¯]
 
 ECHO -------------------------------
 
@@ -8,7 +8,7 @@ ECHO aapt dump badging %~nx1
 
 aapt dump badging %1 > %~dp0%~n1.txt
 
-ECHO [ÔÝÍ£3Ãë×Ô¶¯¹Ø±Õ...]
+ECHO [æš‚åœ3ç§’è‡ªåŠ¨å…³é—­...]
 
 ping -n 3 127.0.0.1>nul
 @ECHO ON

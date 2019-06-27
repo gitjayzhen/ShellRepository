@@ -2,25 +2,25 @@
 
 ECHO.:::::::::::::::::::::::::::::::::::::::::::::::::
 
-ECHO.::             ·ÖÎöMonkeyÈÕÖ¾                  ::
+ECHO.::             åˆ†æžMonkeyæ—¥å¿—                  ::
 
 ECHO.:::::::::::::::::::::::::::::::::::::::::::::::::
 
-REM ·½·¨Ò»£ºÊÖ¶¯ÉèÖÃMonkeyÈÕÖ¾Â·¾¶
+REM æ–¹æ³•ä¸€ï¼šæ‰‹åŠ¨è®¾ç½®Monkeyæ—¥å¿—è·¯å¾„
 
-SET monkeyLogFile=F:\Monkey\1.0.0\20140825181801_monkey.log
+SET monkeyLogFile=F:\Monkey\20140808\FindyouV1.0.0\20140825181801_monkey.log
 
 
 
-REM ·½·¨¶þ£ºÖ±½Ó½«MonkeyÈÕÖ¾ÍÏµ½´ËbatÎÄ¼þÉÏ
+REM æ–¹æ³•äºŒï¼šç›´æŽ¥å°†Monkeyæ—¥å¿—æ‹–åˆ°æ­¤batæ–‡ä»¶ä¸Š
 
 IF NOT "%1"=="" SET monkeyLogFile=%1
 
 
 
-ECHO.[ INFO ] MonkeyÈÕÖ¾: %monkeyLogFile%
+ECHO.[ INFO ] Monkeyæ—¥å¿—: %monkeyLogFile%
 
-ECHO.[ INFO ] ¿ªÊ¼·ÖÎö
+ECHO.[ INFO ] å¼€å§‹åˆ†æž
 
 SET blnException=0
 
@@ -28,13 +28,13 @@ ECHO.
 
 ECHO.
 
-REM Èç¹û¾õµÃ·ÖÎöÌ«¿ì£¬Ã»ÓÐ¸Ð¾õ£¬°ÑÏÂÃæ×¢ÊÍÈ¥µô¼Ù×°·ÖÎöÖÐ£¬ÓÐÍ£¶Ù¸Ð
+REM å¦‚æžœè§‰å¾—åˆ†æžå¤ªå¿«ï¼Œæ²¡æœ‰æ„Ÿè§‰ï¼ŒæŠŠä¸‹é¢æ³¨é‡ŠåŽ»æŽ‰å‡è£…åˆ†æžä¸­ï¼Œæœ‰åœé¡¿æ„Ÿ
 
 REM ping -n 2 127.0.0.1>nul
 
 
 
-::ANRÈÕÖ¾
+::ANRæ—¥å¿—
 
 FOR /F "delims=" %%a IN ('FINDSTR /C:"ANR" %monkeyLogFile%') DO ( 
 
@@ -44,7 +44,7 @@ FOR /F "delims=" %%a IN ('FINDSTR /C:"ANR" %monkeyLogFile%') DO (
 
 
 
-::±ÀÀ£ÈÕÖ¾
+::å´©æºƒæ—¥å¿—
 
 FOR /F "delims=" %%a IN ('FINDSTR /C:"CRASH" %monkeyLogFile%') DO ( 
 
@@ -54,7 +54,7 @@ FOR /F "delims=" %%a IN ('FINDSTR /C:"CRASH" %monkeyLogFile%') DO (
 
     
 
-::Òì³£ÈÕÖ¾
+::å¼‚å¸¸æ—¥å¿—
 
 FOR /F "delims=" %%a IN ('FINDSTR /C:"Exception" %monkeyLogFile%') DO ( 
 
@@ -64,7 +64,7 @@ FOR /F "delims=" %%a IN ('FINDSTR /C:"Exception" %monkeyLogFile%') DO (
 
 
 
-::Õý³£
+::æ­£å¸¸
 
 FOR /F "delims=" %%a IN ('FINDSTR /C:"Monkey finished" %monkeyLogFile%') DO ( 
 
@@ -76,7 +76,7 @@ FOR /F "delims=" %%a IN ('FINDSTR /C:"Monkey finished" %monkeyLogFile%') DO (
 
 IF NOT "%strANR%" == "" (
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾´æÔÚ: ANR
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—å­˜åœ¨: ANR
 
     ECHO.[ INFO ] ------------------------------------
 
@@ -92,7 +92,7 @@ IF NOT "%strANR%" == "" (
 
 IF NOT "%strCRASH%" == "" (
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾´æÔÚ: CRASH
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—å­˜åœ¨: CRASH
 
     ECHO.[ INFO ] ------------------------------------
 
@@ -108,7 +108,7 @@ IF NOT "%strCRASH%" == "" (
 
 IF NOT "%strException%" == "" (
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾´æÔÚ: Òì³£
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—å­˜åœ¨: å¼‚å¸¸
 
     ECHO.[ INFO ] ------------------------------------
 
@@ -122,7 +122,7 @@ IF NOT "%strException%" == "" (
 
 IF NOT "%strFinished%" == "" (
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾´æÔÚ: Ö´ÐÐ³É¹¦±ê¼Ç
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—å­˜åœ¨: æ‰§è¡ŒæˆåŠŸæ ‡è®°
 
     ECHO.[ INFO ] ------------------------------------
 
@@ -132,7 +132,7 @@ IF NOT "%strFinished%" == "" (
 
 ) ELSE (
 
-    IF %blnException% EQU 0 ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾½á¹û: MonkeyÖ´ÐÐÒì³£ÖÐ¶Ï£¬ÇëÖØÐÂÖ´ÐÐMonkey½Å±¾!
+    IF %blnException% EQU 0 ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—ç»“æžœ: Monkeyæ‰§è¡Œå¼‚å¸¸ä¸­æ–­ï¼Œè¯·é‡æ–°æ‰§è¡ŒMonkeyè„šæœ¬!
 
     ECHO.
 
@@ -140,19 +140,19 @@ IF NOT "%strFinished%" == "" (
 
 
 
-REM Èç¹ûblnException²»Îª0£¬ËµÃ÷´æÔÚÒì³££¬¸Ä±ä×ÖÌåÎªµ­×ÏÉ«
+REM å¦‚æžœblnExceptionä¸ä¸º0ï¼Œè¯´æ˜Žå­˜åœ¨å¼‚å¸¸ï¼Œæ”¹å˜å­—ä½“ä¸ºæ·¡ç´«è‰²
 
 IF %blnException% NEQ 0 ( 
 
     Color 0D
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾½á¹û:´æÔÚÒì³£ÈÕÖ¾£¬ÇëÊÖ¹¤ÔÙ×ÐÏ¸¼ì²é£¡
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—ç»“æžœ:å­˜åœ¨å¼‚å¸¸æ—¥å¿—ï¼Œè¯·æ‰‹å·¥å†ä»”ç»†æ£€æŸ¥ï¼
 
     ECHO.
 
 ) ELSE (
 
-    ECHO.[ INFO ] ·ÖÎöMonkeyÈÕÖ¾½á¹û:Õý³£
+    ECHO.[ INFO ] åˆ†æžMonkeyæ—¥å¿—ç»“æžœ:æ­£å¸¸
 
     ECHO.
 
@@ -160,6 +160,6 @@ IF %blnException% NEQ 0 (
 
 ECHO.
 
-ECHO.[ EXIT ] °´ÈÎÒâ¼ü¹Ø±Õ´°¿Ú...
+ECHO.[ EXIT ] æŒ‰ä»»æ„é”®å…³é—­çª—å£...
 
 PAUSE>nul
