@@ -7,6 +7,6 @@ sshpass -p $pw scp -o StrictHostKeyChecking=no -r install.sh $user@$ip:~/
 if [ "$process"s == s ];then
     sshpass -p $pw ssh -o StrictHostKeyChecking=no $user@$ip "sh ~/install.sh ; rm ~/install.sh"
 else
-    sshpass -p $pw ssh -o StrictHostKeyChecking=no $user@$ip "sh ~/install.sh ; sh ~/mem/addmem_wtt.sh $process ; rm ~/install.sh"
+    sshpass -p $pw ssh -o StrictHostKeyChecking=no $user@$ip "sh ~/install.sh ; sh ~/mem/addmem_qa.sh $process ; rm ~/install.sh"
 fi
 echo "stop install mem"

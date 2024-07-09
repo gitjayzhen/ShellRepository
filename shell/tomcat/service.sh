@@ -5,7 +5,7 @@ tclog=${basedir}/logs/catalina.out
 
 export JAVA_OPTS="-server -Xmx4g -Xms4g -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
 export CATALINA_PID=${basedir}/bin/tomcat.pid
-export CATALINA_OPTS="${JAVA_AGENT} -Djava.rmi.server.hostname=10.148.11.189"
+export CATALINA_OPTS="${JAVA_AGENT} -Djava.rmi.server.hostname=10.1.1.1"
 export JAVA_HOME="/data/jdk"
 export JRE_HOME="/data/jdk"
 

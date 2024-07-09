@@ -5,10 +5,10 @@ echo "~/mem/ exist..." &&
 wget "http://10.1.1.1:3334/public/mem/mem.sh" -O ~/mem/mem.sh && 
 wget "http://10.1.1.1:3334/public/mem/io.sh" -O ~/mem/io.sh && 
 wget "http://10.1.1.1:3334/public/mem/io2.sh" -O ~/mem/io2.sh && 
-wget "http://10.1.1.1:3334/public/mem/addmem_wtt.sh" -O ~/mem/addmem_wtt.sh && 
-wget "http://10.1.1.1:3334/public/mem/getmem_wtt.sh" -O ~/mem/getmem_wtt.sh && 
-wget "http://10.1.1.1:3334/public/mem/getpic_wtt.sh" -O ~/mem/getpic_wtt.sh && 
-wget "http://10.1.1.1:3334/public/mem/getpids_wtt.sh" -O ~/mem/getpids_wtt.sh &&  
+wget "http://10.1.1.1:3334/public/mem/addmem_qa.sh" -O ~/mem/addmem_qa.sh && 
+wget "http://10.1.1.1:3334/public/mem/getmem_qa.sh" -O ~/mem/getmem_qa.sh && 
+wget "http://10.1.1.1:3334/public/mem/getpic_qa.sh" -O ~/mem/getpic_qa.sh && 
+wget "http://10.1.1.1:3334/public/mem/getpids_qa.sh" -O ~/mem/getpids_qa.sh &&  
 wget "http://10.1.1.1:3334/public/mem/script/functions.sh" -O ~/mem/script/functions.sh && 
 wget "http://10.1.1.1:3334/public/mem/script/diskio.create.sh" -O ~/mem/script/diskio.create.sh && 
 wget "http://10.1.1.1:3334/public/mem/script/diskio.update.sh" -O ~/mem/script/diskio.update.sh && 

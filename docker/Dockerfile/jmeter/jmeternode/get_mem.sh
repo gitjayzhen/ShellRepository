@@ -8,7 +8,7 @@ pid=$7
 file=$process'_'$duration
 filename=$path'/'$file
 echo "start get mem"
-sshpass -p $pw ssh -o StrictHostKeyChecking=no $user@$ip "sh ~/mem/getmem_wtt.sh $process $pid"
+sshpass -p $pw ssh -o StrictHostKeyChecking=no $user@$ip "sh ~/mem/getmem_qa.sh $process $pid"
 sshpass -p $pw scp -o StrictHostKeyChecking=no -r $user@$ip:~/mem/output/top.$process.$pid.csv $path/$file'_top'
 sshpass -p $pw scp -o StrictHostKeyChecking=no -r $user@$ip:~/mem/output/psaux.$process.$pid.csv $path/$file'_ps'
 

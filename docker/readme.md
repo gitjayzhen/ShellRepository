@@ -148,7 +148,7 @@ docker login http://xxxxx.com
 ```
 
 
-docker run --add-host=wap.qadev.com:10.153.44.159 --add-host=m.qadev.com:10.153.44.159 
+docker run --add-host=wap.qadev.com:10.1.1.1 --add-host=m.qadev.com:10.1.1.1 
 
 
 
