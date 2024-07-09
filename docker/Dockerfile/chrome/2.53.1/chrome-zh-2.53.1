@@ -1,0 +1,13 @@
+FROM selenium/standalone-chrome:2.53.1
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+USER root
+
+#====================
+# chinese and No Gui
+#====================
+
+RUN apt-get update \
+	&& apt-get -y install ttf-wqy-microhei ttf-wqy-zenhei \
+	&& apt-get -y install vim \
+    && apt-get clean

@@ -80,3 +80,5 @@ ENV/
 
 # Rope project settings
 .ropeproject
+**.tar.gz
+.DS_Store

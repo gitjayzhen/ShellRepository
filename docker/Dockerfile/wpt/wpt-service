@@ -1,0 +1,22 @@
+FROM docker.qadev.com/sqa-base/tomcat:8.5.61-jdk8-openjdk-slim-buster
+
+# 标记
+LABEL maintainer="jayzhen@qadev-inc.com"
+LABEL use-for="wpt"
+LABEL version="wpt-service"
+
+# 这个路径要和 com.webpage.service.YslowProcessService 的全局变量保持一致
+ENV CATALINA_BASE /usr/local/tomcat
+ENV YSLOW_HOME /data/tool/phatom/testjs/
+ENV PHANTOM_HOME /data/tool/phatom/phantomjs1.9.8/bin/
+
+RUN mkdir -p $YSLOW_HOME \
+    && mkdir -p $PHANTOM_HOME
+
+COPY ./doc/bin/yslow.js $YSLOW_HOME
+COPY ./doc/bin/phantomjs $PHANTOM_HOME
+
+RUN chmod 777 /data/tool/phatom
+
+# 将build的包配置到image中
+COPY ./web-page-service/target/ROOT.war $CATALINA_BASE/webapps/ROOT.war

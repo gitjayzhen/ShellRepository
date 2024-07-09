@@ -1,0 +1,19 @@
+version: '3'
+services:
+  jmeternode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jmeternode
+    container_name: jmeternode
+    volumes:
+      - ../../uploadfiles:/data/daemon/public/files
+    restart: always
+    ports:
+      - 3333:3333
+    entrypoint:
+      - /bin/bash
+    tty: true
+    stdin_open: true
+    command:
+      - start.sh

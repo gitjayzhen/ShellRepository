@@ -1,0 +1,16 @@
+<% if (messages.error) { %> 
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">
+            &times;
+        </a>
+        <strong>Warning！</strong><%- messages.error %>
+    </div>
+<% } %>
+<% if (messages.success) { %> 
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">
+            &times;
+        </a>
+        <strong>Success！</strong><%- messages.success %>
+    </div>
+<% } %>

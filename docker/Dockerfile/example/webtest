@@ -1,0 +1,7 @@
+FROM tomcat:8-jdk11
+
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+ADD uts-shadow.war /usr/local/tomcat/webapps/ROOT.war
+
+

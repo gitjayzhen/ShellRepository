@@ -1,0 +1,7 @@
+FROM alpine:3.18.3
+
+# CMD ["-H"]
+
+ENTRYPOINT ["top", "-b"]
+
+CMD ["-e"]

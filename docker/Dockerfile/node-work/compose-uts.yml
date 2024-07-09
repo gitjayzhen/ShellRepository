@@ -1,0 +1,89 @@
+version: '2'
+services:
+  baike-8801:
+    container_name: baike-8801
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8801:4444"
+      - "5901:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    ulimits:
+      core: 0
+  baike-8802:
+    container_name: baike-8802
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8802:4444"
+      - "5902:5900"
+    volumes:
+      - /dev/shm:/dev/shm    
+    ulimits:
+      core: 0         
+  baike-8803:
+    container_name: baike-8803
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8803:4444"
+      - "5903:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    ulimits:
+      core: 0
+  baike-8804:
+    container_name: baike-8804
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8804:4444"
+      - "5904:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    ulimits:
+      core: 0
+  baike-8805:
+    container_name: baike-8805
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8805:4444"
+      - "5905:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    ulimits:
+      core: 0
+  baike-8806:
+    container_name: baike-8806
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8806:4444"
+      - "5906:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "1"
+    ulimits:
+      core: 0
+  baike-8807:
+    container_name: baike-8807
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports:
+      - "8807:4444"
+      - "5907:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "1"
+    ulimits:
+      core: 0

@@ -1,0 +1,36 @@
+version: '3'
+services:
+  report_mysql:
+    image: docker.qadev.com/jayzhen/mysql:5.7.24
+    container_name: report_mysql
+    volumes:
+      - /data/performance_report_mysql/:/var/lib/mysql/
+      - /data/performance_report_mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: '12345678'
+    ports:
+      - 3307:3306
+    networks:
+      - default
+    tty: true
+    stdin_open: true
+  performance_report:
+    image: docker.qadev.com/jayzhen/docker_report:v5.3
+    container_name: performance_report
+    volumes:
+      - /data/performance_report_data:/data/daemon/public/files
+      - /data/jayzhen/docker-compose-file/report-docker/performance_report/start.sh:/data/daemon/performance_report/start.sh
+      - /data/jayzhen/docker-compose-file/report-docker/performance_report/config.js:/data/daemon/performance_report/config/config.js
+    restart: always
+    ports:
+      - 3334:3334
+    entrypoint:
+      - /bin/bash
+    tty: true
+    stdin_open: true
+    command:
+      - start.sh
+    depends_on:
+      - report_mysql

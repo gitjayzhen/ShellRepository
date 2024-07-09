@@ -1,0 +1,146 @@
+FROM selenium/node-base:3.141.5-astatine
+LABEL authors=jwensh
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+
+# 改变node的启动参数
+ENV NODE_MAX_INSTANCES 5
+ENV NODE_MAX_SESSION 5
+
+
+#============================================
+# selenium/node-chrome:3.141.5-astatine
+#============================================
+
+
+USER root
+
+#============================================
+# Google Chrome
+#============================================
+
+COPY linux_signing_key.pub /opt/selenium/linux_signing_key.pub
+
+ARG CHROME_VERSION="google-chrome-stable"
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+RUN apt-key add /opt/selenium/linux_signing_key.pub \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update -qqy \
+  && apt-get -qqy install \
+    ${CHROME_VERSION:-google-chrome-stable} \
+  && rm /etc/apt/sources.list.d/google-chrome.list \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+#=================================
+# Chrome Launch Script Wrapper
+#=================================
+COPY wrap_chrome_binary /opt/bin/wrap_chrome_binary
+RUN /opt/bin/wrap_chrome_binary
+
+USER seluser
+
+#============================================
+# Chrome webdriver
+#============================================
+
+ARG CHROME_DRIVER_VERSION="latest"
+RUN CD_VERSION=$(if [ ${CHROME_DRIVER_VERSION:-latest} = "latest" ]; then echo $(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE); else echo $CHROME_DRIVER_VERSION; fi) \
+  && echo "Using chromedriver version: "$CD_VERSION \
+  && wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CD_VERSION/chromedriver_linux64.zip \
+  && rm -rf /opt/selenium/chromedriver \
+  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
+  && rm /tmp/chromedriver_linux64.zip \
+  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-$CD_VERSION \
+  && chmod 755 /opt/selenium/chromedriver-$CD_VERSION \
+  && sudo ln -fs /opt/selenium/chromedriver-$CD_VERSION /usr/bin/chromedriver
+
+COPY generate_config /opt/bin/generate_config
+
+# Generating a default config during build time
+RUN /opt/bin/generate_config > /opt/selenium/config.json
+
+
+#============================================
+# selenium/node-chrome:3.141.5-astatine
+#============================================
+USER root
+
+#=====
+# VNC
+#=====
+RUN apt-get update -qqy \
+  && apt-get -qqy install \
+  x11vnc \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+#=========
+# fluxbox
+# A fast, lightweight and responsive window manager
+#=========
+RUN apt-get update -qqy \
+  && apt-get -qqy install \
+    fluxbox \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+USER seluser
+
+#==============================
+# Generating the VNC password as seluser
+# So the service can be started with seluser
+#==============================
+
+RUN mkdir -p ${HOME}/.vnc \
+  && x11vnc -storepasswd secret ${HOME}/.vnc/passwd
+
+#==========
+# Relaxing permissions for OpenShift and other non-sudo environments
+#==========
+RUN sudo chmod -R 777 ${HOME} \
+  && sudo chgrp -R 0 ${HOME} \
+  && sudo chmod -R g=u ${HOME}
+
+#==============================
+# Scripts to run fluxbox and x11vnc
+#==============================
+COPY start-fluxbox.sh \
+      start-vnc.sh \
+      /opt/bin/
+
+#==============================
+# Supervisor configuration file
+#==============================
+COPY selenium-debug.conf /etc/supervisor/conf.d/
+
+
+#============================================
+# selenium/standalone-chrome-debug:3.141.0-actinium
+#============================================
+
+USER seluser
+
+#====================================
+# Scripts to run Selenium Standalone
+#====================================
+COPY start-selenium-standalone.sh /opt/bin/start-selenium-standalone.sh
+
+#==============================
+# Supervisor configuration file
+#==============================
+COPY selenium.conf /etc/supervisor/conf.d/
+
+
+USER root
+
+#=============
+# chinese
+#=============
+
+RUN apt-get update \
+	&& apt-get -y install ttf-wqy-microhei ttf-wqy-zenhei \
+  && apt-get -y install vim \
+  && apt-get -y install cron \
+  && apt-get clean
+
+
+EXPOSE 4444
+EXPOSE 5900

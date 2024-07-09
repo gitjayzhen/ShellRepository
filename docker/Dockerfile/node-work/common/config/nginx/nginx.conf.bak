@@ -1,0 +1,84 @@
+worker_processes auto;
+
+events {
+  worker_connections 1024;
+  use epoll;
+  multi_accept on;
+}
+
+http {
+  include /etc/nginx/mime.types;
+  tcp_nodelay on;
+
+  # this is necessary for us to be able to disable request buffering in all cases
+  proxy_http_version 1.1;
+  
+  client_header_buffer_size 512k;
+  large_client_header_buffers 4 64k;
+  client_max_body_size 2G;
+  client_body_buffer_size 4096k;
+  proxy_ignore_client_abort on;
+  proxy_read_timeout 600;
+  proxy_send_timeout 600;
+
+  keepalive_timeout  6000;
+
+
+  server {
+    listen 80;
+    server_name community.qadev.sg.com localhost	
+    # disable any limits to avoid HTTP 413 for large image uploads
+    client_max_body_size 0;
+    chunked_transfer_encoding on;
+    location / {
+      proxy_pass http://ui/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      
+      # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+      proxy_set_header X-Forwarded-Proto $scheme;
+      
+      proxy_buffering off;
+      proxy_request_buffering off;
+    }
+
+    location /v1/ {
+      return 404;
+    }
+
+    location /v2/ {
+      proxy_pass http://registry/v2/;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      
+      # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+      proxy_set_header X-Forwarded-Proto $scheme;
+      
+      proxy_buffering off;
+      proxy_request_buffering off;
+
+    }
+
+    location /service/ {
+      proxy_pass http://ui/service/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      
+      # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+
+#  location ^~ /ota/ {
+#        proxy_pass  http://qadev-ota:8080;
+#        proxy_set_header    X-Real-IP  $remote_addr;
+#        proxy_set_header    Host       $host;
+#        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+#        proxy_buffer_size 4k;
+#        proxy_buffers 4 32k;
+#        proxy_busy_buffers_size 64k;
+#        proxy_temp_file_write_size 64k;
+#        proxy_max_temp_file_size 512m;
+#    }
+}
+}

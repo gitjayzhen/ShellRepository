@@ -1,0 +1,12 @@
+FROM openjdk:8u262-slim
+
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+ADD browsermob-proxy-2.1.4/ /usr/src/
+
+WORKDIR /usr/src
+
+EXPOSE 8080
+EXPOSE 11033-11022
+
+CMD ["/usr/src/bin/browsermob-proxy","-port","8080"]

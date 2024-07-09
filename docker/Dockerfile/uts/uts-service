@@ -1,0 +1,14 @@
+FROM tomcat:8.5.59-jdk8-openjdk-slim-buster
+
+# 标记
+LABEL maintainer="jayzhen@qadev-inc.com"
+LABEL use-for="utsaap"
+LABEL version="uts-service"
+
+# 将build的包配置到image中
+ENV BASE_DIR /usr/local/tomcat
+COPY ./utsaap-service/target/utsaap-service.war $BASE_DIR/webapps/ROOT.war
+
+ENV wDir /uts/screenshots
+RUN mkdir -p "$wDir"
+WORKDIR $wDir

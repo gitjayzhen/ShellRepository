@@ -1,0 +1,20 @@
+FROM python:3.7.6
+
+MAINTAINER jwensh <jayzhen@qadev-inc.com>
+
+# 创建工作目录
+RUN mkdir -p /data/kratos \
+    &&apt-get update \
+    &&apt-get -y install freetds-dev \
+    &&apt-get -y install unixodbc-dev
+
+# 添加必要的工作文件
+COPY app /data/kratos 
+COPY requirements.txt /data/kratos
+
+# 安装必要的库
+RUN pip install -r /data/kratos/requirements.txt -i https://pypi.douban.com/simple
+
+WORKDIR /data/kratos
+
+CMD ["/bin/bash","run.sh"]

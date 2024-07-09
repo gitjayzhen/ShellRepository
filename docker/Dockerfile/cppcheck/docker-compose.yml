@@ -1,0 +1,10 @@
+version: '3'
+services:
+  httprunner:
+    image: docker.qadev.com/jayzhen/cppcheck:v1.0
+    container_name: cppcheck
+    restart: always
+    entrypoint:
+      - /bin/bash
+    tty: true
+    stdin_open: true

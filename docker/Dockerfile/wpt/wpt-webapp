@@ -1,0 +1,10 @@
+FROM docker.qadev.com/sqa-base/tomcat:8.5.61-jdk8-openjdk-slim-buster
+
+# 标记
+LABEL maintainer="jayzhen@qadev-inc.com"
+LABEL use-for="wpt"
+LABEL version="wpt-webapp"
+
+# 将build的包配置到image中
+ENV CATALINA_BASE /usr/local/tomcat
+COPY ./web-page-webapp/target/ROOT.war $CATALINA_BASE/webapps/ROOT.war

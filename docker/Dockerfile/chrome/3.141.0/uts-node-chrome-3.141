@@ -1,0 +1,22 @@
+FROM selenium/node-chrome-debug:3.141.0
+
+LABEL authors="jwensh <jayzhen@qadev-inc.com>"
+
+USER root
+
+#=============
+# chinese
+#=============
+
+RUN apt-get update \
+	&& apt-get -y install ttf-wqy-microhei ttf-wqy-zenhei \
+    && apt-get -y install vim \
+    && apt-get -y install cron \
+    && apt-get clean
+
+
+#=============
+# ulimit
+
+RUN echo 'root    hard    core    0' >> /etc/security/limits.conf \
+    && echo 'root    soft    core    0' >> /etc/security/limits.conf

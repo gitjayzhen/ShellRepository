@@ -1,0 +1,7 @@
+FROM **/qadev-base/pure-ftpd:hardened.hub
+
+MAINTAINER Lich <@**.com>
+
+CMD /run.sh -c 500 -C 500 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30499
+
+EXPOSE 21 30000-30499

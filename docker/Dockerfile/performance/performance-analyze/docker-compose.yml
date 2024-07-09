@@ -1,0 +1,14 @@
+version: '3'
+services:
+  performance_logana:
+    image: docker.qadev.com/jayzhen/docker_ana:v6
+    container_name: performance_logana
+    restart: always
+    privileged: true
+    entrypoint:
+      - /usr/sbin/init 
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /data/jayzhen/docker-compose-file/report-docker/performance_ana/cache:/data/daemon/cache
+    stdin_open: true

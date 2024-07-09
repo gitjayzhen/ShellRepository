@@ -1,0 +1,23 @@
+FROM selenium/standalone-chrome-debug:2.53.1
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+USER seluser
+
+#==============================
+# Generating the VNC password as seluser
+# So the service can be started with seluser
+#==============================
+
+RUN mkdir -p ~/.vnc \
+    && x11vnc -storepasswd 123456 ~/.vnc/passwd
+
+USER root
+
+#=====
+# chinese
+#=====
+
+RUN apt-get update \
+	&& apt-get -y install ttf-wqy-microhei ttf-wqy-zenhei \
+    && apt-get clean \
+

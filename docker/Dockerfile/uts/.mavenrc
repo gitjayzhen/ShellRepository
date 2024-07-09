@@ -1,0 +1,11 @@
+# source ~/.mavenrc -> mvn clean install 使用
+# 作为docker轻应用使用：用后删除
+mvn() {
+  docker run --rm \
+    --name my-mvn \
+    -v $(pwd):/project \
+    -v /data/.m2:/root/.m2 \
+    -w /project \
+    maven:3.6.3-jdk-8 \
+    mvn $*
+}

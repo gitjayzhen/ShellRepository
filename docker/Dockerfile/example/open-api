@@ -1,0 +1,7 @@
+FROM registry.***.net/library/java:8-jre
+
+ADD build/libs/open-api-0.0.1-SNAPSHOT.jar /usr/src/open-api.jar
+
+WORKDIR /usr/src
+
+CMD ["java", "-Duser.timezone=Asia/Shanghai",  "-Djava.security.egd=file:/dev/./urandom", "-jar", "open-api.jar", "--spring.profiles.active=test"]

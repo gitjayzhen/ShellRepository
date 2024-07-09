@@ -1,0 +1,18 @@
+version: '3'
+services:
+  report_mysql:
+    image: mysql:5.7
+    container_name: report_mysql
+    volumes:
+      - /data/performance_report_mysql/:/var/lib/mysql/
+      - /data/performance_report_mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: '12345678'
+    ports:
+      - 3306:3306
+    networks:
+      - default
+    tty: true
+    stdin_open: true

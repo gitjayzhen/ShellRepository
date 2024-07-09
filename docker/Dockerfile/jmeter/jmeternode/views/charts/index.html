@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>
+                性能监测结果
+            </title>
+            <!-- 引入 echarts.js -->
+            <script src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js" type="text/javascript">
+            </script>
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+                </script>
+                <link href="../../../../css/style.css" rel="stylesheet">
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            var filename = "targetfile"
+                            $.ajax({
+                                url: "/echart/csv",
+                                dataType: "json",
+                                data: 'filename=' + filename,
+                                type: 'POST',
+                                success: function (data) {
+                                    console.log(data)
+                                    console.log('Success!')
+                                    var chart_data = data['data']
+                                    chartname=['%CPU','%MEM','VIRT','RES','VSZ','RSS']
+                                    divname=['cpu','mem','virt','res','vsz','rss']
+                                    for(var i=0;i<chartname.length;i++){
+                                        if(chart_data[chartname[i]]){
+                                            if(chart_data[chartname[i]][0].endsWith('g')){
+                                                temp=chart_data[chartname[i]].join(',')
+                                                temp1=temp.replace(/g/g,"")
+                                                chart_data[chartname[i]]=temp1.split(',')
+                                                formattervalue = '{value}g'
+                                            }else if(i==0||i==1){
+                                                formattervalue = '{value}%'
+                                            }else{
+                                                formattervalue='{value}'
+                                            }
+                                            $('#content').append("<div id="+divname[i]+"></div>");
+                                            var mychart=echarts.init($('#'+divname[i])[0]);
+                                            var option={
+                                                title: {
+                                                    text: '性能监测结果 - '+chartname[i]
+                                                },
+                                                tooltip: { formatter: '{c}' },
+                                                legend: {
+                                                    data: [chartname[i]]
+                                                },
+                                                xAxis: {
+                                                    data: chart_data['DATE_TIME']
+                                                },
+                                                yAxis: [{
+                                                    axisLabel: {
+                                                        formatter: formattervalue
+                                                    }
+                                                }],
+                                                series: [{
+                                                    name: chartname[i],
+                                                    type: 'line',
+                                                    data: chart_data[chartname[i]], 
+                                                    markPoint: {
+                                                        data: [
+                                                            { type: 'max', name: '最大值' },
+                                                            { type: 'min', name: '最小值' }
+                                                        ]
+                                                    },
+                                                    markLine: {
+                                                        data: [
+                                                            { type: 'average', name: '平均值' }
+                                                        ]
+                                                    }
+                                                }]
+                                            };
+                                            mychart.setOption(option)
+                                        }
+                                        else{
+                                            console.log('not exist')
+                                        }
+                                    }
+                                },
+                                error: function (error, status, message) {
+                                    alert("something wrong,please try again");
+                                }
+                            });
+                        })
+                    </script>
+                </link>
+            </link>
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <div class="table-wrapper" id="content">
+            </div>
+        </div>
+    </body>
+</html>

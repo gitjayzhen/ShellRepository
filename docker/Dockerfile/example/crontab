@@ -1,0 +1,1 @@
+0 10 * * * echo "" >> /tmp/test.txt

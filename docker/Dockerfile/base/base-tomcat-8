@@ -1,0 +1,24 @@
+FROM  docker.qadev.com/official/debian:buster-20210111-slim
+
+LABEL maintainer="jayzhen@qadev-inc.com"
+LABEL use-for="tomcat"
+LABEL version="debian-buster-20210111-slim"
+
+ADD ./lib/jdk-8u271-linux-x64.tar.gz /usr/local/
+ADD ./lib/apache-tomcat-8.5.61.tar.gz /usr/local/
+
+ENV JAVA_HOME /usr/local/jdk1.8.0_271
+ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+ENV CATALINA_HOME /usr/local/apache-tomcat-8.5.61
+ENV CATALINA_BASE /usr/local/apache-tomcat-8.5.61
+ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
+
+RUN cd $CATALINA_HOME && rm -rf ./webapps && mkdir webapps \
+    && chmod -R +rX . \
+    && chmod 777 logs temp work
+
+WORKDIR $CATALINA_HOME
+
+EXPOSE  8080
+
+CMD ["catalina.sh", "run"]

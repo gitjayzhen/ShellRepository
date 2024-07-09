@@ -1,0 +1,10 @@
+version: '3'
+services:
+  httprunner:
+    image: docker.qadev.com/tools/httprunner:v1.3
+    container_name: httprunner
+    restart: always
+    entrypoint:
+      - /bin/bash
+    tty: true
+    stdin_open: true

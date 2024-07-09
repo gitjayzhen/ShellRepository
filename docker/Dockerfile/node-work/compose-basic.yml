@@ -1,0 +1,219 @@
+version: '2'
+services:
+  monitor:
+    container_name: monitor
+    image: portainer/portainer
+    ports:
+      - "19000:9000"
+      - "18000:8000"
+    restart: always
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/volumes/portainer_data:/data
+      - /data/volumes/portainer_public:/public
+  zookeeper:
+    container_name: zookeeper
+    image: zookeeper:3.5
+    restart: always
+    privileged: true
+    volumes:
+      - ./common/config/zookeeper/conf:/conf
+      # - ./common/config/dubbo-admin/dubbo.properties:/dubbo/config/dubbo/dubbo.properties
+    ports:
+      - "2181:2181"
+      - "20887:20887"
+    environment:
+      - LOGSPOUT=ignore
+    cpu_shares: 256
+    mem_limit: 256m
+  dubbo-admin:
+    container_name: dubbo-admin
+    image: apache/dubbo-admin
+    # depends_on:
+    #   - zookeeper
+    ports:
+      - "18080:8080"
+    environment:
+      - admin.config-center=zookeeper://zookeeper:2181
+      - dubbo.registry.address=zookeeper://zookeeper:2181
+      - dubbo.metadata-report.address=zookeeper://zookeeper:2181
+  redis:
+    container_name: redis
+    image: redis:3.2.12
+    privileged: true
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - /data/volumes/redis:/data
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+    command: "redis-server --requirepass sqa.test --appendonly yes"
+    environment:
+      - LOGSPOUT=ignore
+    cpu_shares: 256
+    mem_limit: 128m
+  redis-uts:
+    container_name: redis-uts
+    image: redis:3.2.12
+    privileged: true
+    restart: always
+    ports:
+      - "6739:6379"
+    volumes:
+      - /data/volumes/redis-uts:/data
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+    command: "redis-server --requirepass sqa.test --appendonly yes"
+    environment:
+      - LOGSPOUT=ignore
+    cpu_shares: 256
+    mem_limit: 256m
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.8.2-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+    volumes:
+      - /data/volumes/rabbitmq:/var/lib/rabbitmq
+  publish-chrome:
+    container_name: publish-chrome
+    image: docker.qadev.com/uts/chrome:3.141.0
+    restart: always
+    ports: 
+      - "7878:4444"
+      - "5900:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    extra_hosts:
+      - "admin.wenwen.qq.com:58.250.143.243"
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:2.208
+    privileged: true
+    restart: always
+    ports:
+      - "8888:8080/tcp"
+      - "50000:50000/tcp"
+    environment:
+      - JAVA_OPTS=-Duser.timezone=Asia/Shanghai
+    volumes:
+      - /data/volumes/jenkins_home_2:/var/jenkins_home
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+  # mysql:
+  #   container_name: mysql-server
+  #   image: mysql:5.7
+  #   restart: always
+  #   privileged: true
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - /data/volumes/mysql5.7/lib:/var/lib/mysql
+  #     - /data/volumes/mysql5.7/my57.cnf:/etc/mysql/my.cnf
+  #     - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=qadev
+  #     - MYSQL_USER=qadev
+  #     - MYSQL_PASSWORD=qadev
+  #     - LOGSPOUT=ignore
+  #   cpu_shares: 256
+  #   mem_limit: 3G
+  # 217 机器上 
+  influxdb:
+    container_name: influxdb
+    image: influxdb:1.8.3
+    restart: always
+    environment:
+      - INFLUXDB_ADMIN_USER=admin 
+      - INFLUXDB_ADMIN_PASSWORD=admin
+    volumes:
+      - /data/influxdb/conf:/etc/influxdb
+      - /data/influxdb/data:/var/lib/influxdb/data
+      - /data/influxdb/meta:/var/lib/influxdb/meta
+      - /data/influxdb/wal:/var/lib/influxdb/wal
+    ports:
+      - "18086:8086"
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.23.0
+    hostname: prometheus
+    restart: always
+    ports:
+      - '19090:9090'
+    volumes:
+      - ./common/config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+  node-exporter:
+    image: prom/node-exporter:v1.0.1
+    hostname: node-exporter
+    container_name: node-exporter
+    ports:
+      - '9100:9100'
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    restart: always
+    network_mode: host
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+  grafana:
+    image: grafana/grafana:7.3.6
+    container_name: grafana
+    hostname: grafana
+    privileged: true
+    restart: always
+    ports:
+      - '13000:3000'
+    volumes:
+      - /data/grafana/:/var/lib/grafana/
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor:v0.33.0
+    restart: unless-stopped
+    privileged: true
+    command: '-storage_driver=influxdb -storage_driver_host=10.1.1.1:18086 -storage_driver_db=cadvisor -storage_driver_user=root -storage_driver_password=123456'
+    ports:
+      - '18080:8080'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+
+  nginxgateway:
+    container_name: nginxgateway
+    restart: always
+    image: nginx:1.15
+    privileged: true
+    volumes:
+      - ./common/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./common/config/nginx/nginxgateway.conf:/etc/nginx/conf.d/default.conf
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /data/server/postman-ci-interface/reportes:/usr/share/nginx/html/postman/report
+      - /data/server/uts-screenshots:/usr/share/nginx/html/uts-images
+      - /data/jenkins/war/:/usr/share/nginx/html/war-list
+      - /data/wwx/cypress-io/out/results:/usr/share/nginx/html/cypress-out
+      # - /data/server/wiki/_book:/usr/share/nginx/html/wiki
+      - /data/server/mtl-frontend:/usr/share/nginx/html/mtl-frontend
+      - /data/server/pub-html:/usr/share/nginx/html/pub-html
+      - /data/server/ngtest/views:/usr/share/nginx/html/trpc-ui
+    ports:
+      - 80:80
+      - 443:443
+    dns:
+      - 8.8.8.8
+

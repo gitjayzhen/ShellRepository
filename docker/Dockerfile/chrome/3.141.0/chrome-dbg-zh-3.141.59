@@ -1,0 +1,20 @@
+FROM selenium/standalone-chrome-debug:3.141.59
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+
+# 改变node的启动参数
+
+ENV NODE_MAX_INSTANCES 5
+ENV NODE_MAX_SESSION 5
+
+USER root
+
+#=============
+# chinese
+#=============
+
+RUN apt-get update \
+	&& apt-get -y install ttf-wqy-microhei ttf-wqy-zenhei \
+    && apt-get -y install vim \
+    && apt-get -y install cron \
+    && apt-get clean

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  qa_platform_mysql:
+    image: docker.qadev.com/jayzhen/mysql:5.7.24
+    container_name: qa_platform_mysql
+    volumes:
+      - /data/qa_platform_mysql/:/var/lib/mysql/
+      - ./mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: '12345678'
+    ports:
+      - 3306:3306
+  qa_platform:
+    image: docker.qadev.com/jayzhen/docker_qa_platform:vnum
+    container_name: qa_platform
+    volumes:
+      - /data/qa_platform_publictools/:/data/daemon/publictools/
+      - /data/qa_platform_publicdiff/:/data/daemon/publicdiff/
+      - /data/qa_platform_publicemail/:/data/daemon/public/email/
+      - /data/qa_platform_publicupload/:/data/daemon/public/upload/
+    restart: always
+    ports:
+      - 3333:3333
+    entrypoint: "node app.js"
+    depends_on:
+      - qa_platform_mysql

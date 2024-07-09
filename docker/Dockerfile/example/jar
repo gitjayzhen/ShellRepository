@@ -1,0 +1,10 @@
+FROM openjdk:8u262-slim
+MAINTAINER jayzhen <jayzhen@qadev-inc.com>
+
+ADD server.jar /usr/src
+ADD lib/ /usr/src/lib
+ADD src/conifg /usr/src/config
+
+WORKDIR /usr/src
+
+CMD ["java","-Duser.timezone=Asia/Shanghai","-jar","server.jar"]

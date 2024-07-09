@@ -1,0 +1,18 @@
+version: '3'
+services:
+  performance_report:
+    image: docker.qadev.com/jayzhen/docker_report:v5.3
+    container_name: performance_report
+    volumes:
+      - /data/performance_report_data:/data/daemon/public/files
+      - /data/jayzhen/docker-compose-file/report-docker/performance_report/start.sh:/data/daemon/performance_report/start.sh
+      - /data/jayzhen/docker-compose-file/report-docker/performance_report/config.js:/data/daemon/performance_report/config/config.js
+    restart: always
+    ports:
+      - 3334:3334
+    entrypoint:
+      - /bin/bash
+    tty: true
+    stdin_open: true
+    command:
+      - start.sh

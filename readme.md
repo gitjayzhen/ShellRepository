@@ -12,3 +12,8 @@
 ## 20190627 删除一些没用的脚本（枯叶拂去）
 
 分类来管理整个脚本集，包含`bat`、`fiddler`、`mobile`、`shell`
+
+## 20240709 添加 docker 和 jenkins 使用的脚本
+
+- 日常测试使用的 dockerfile
+- cicd 使用的 jenkins pipeline
